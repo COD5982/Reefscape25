@@ -60,8 +60,8 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // NamedCommands.registerCommand("rotateArmReef", ar);
-
+    NamedCommands.registerCommand("ScoreReef", Autos.ScoreReef(m_arm));
+  
     // Configure the trigger bindings
     configureBindings();
 

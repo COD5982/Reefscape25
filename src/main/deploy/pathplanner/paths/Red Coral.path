@@ -8,8 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.527868150684933,
-        "y": 1.7636344178082186
+        "x": 7.451387323155942,
+        "y": 2.001648457353118
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.6651639344262295,
+        "y": 4.630379098360655
+      },
+      "prevControl": {
+        "x": 6.809730367350695,
+        "y": 4.426416978172871
+      },
+      "nextControl": {
+        "x": 6.520597501501764,
+        "y": 4.834341218548439
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +36,8 @@
         "y": 5.339747431506848
       },
       "prevControl": {
-        "x": 4.950171232876712,
-        "y": 5.339747431506848
+        "x": 6.144594286424037,
+        "y": 5.123839224822475
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +47,14 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "ScoreReef",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,

@@ -22,7 +22,12 @@ public final class Autos {
     return Commands.sequence(
       new TimedDrive(driveSubsystem, 1, -0.2, 0, 0, true),
       armSubsystem.ArmtopositionCommand(Arm.Reefarm),
-      new RunCommand(() -> intakeSubsystem.Run(1.0), intakeSubsystem));
+      new RunCommand(() -> intakeSubsystem.Run(1.0), intakeSubsystem)
+    );
+  }
+
+  public static Command ScoreReef(Arm armSub) {
+    return armSub.ArmtopositionCommand(Arm.Reefarm);
   }
 
   private Autos() {
