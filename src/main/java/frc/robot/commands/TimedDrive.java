@@ -23,6 +23,7 @@ public class TimedDrive extends Command {
 
     @Override
     public void initialize(){
+        timer = new Timer();
         timer.start();
     }
 
