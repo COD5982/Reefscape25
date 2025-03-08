@@ -20,7 +20,7 @@ public final class Autos {
 
   public static Command DriveAndDump(DriveTrainBase driveSubsystem, Arm armSubsystem, Intake intakeSubsystem) {
     return Commands.sequence(
-      new TimedDrive(driveSubsystem, 1, 0.2, 0, 0, true),
+      new TimedDrive(driveSubsystem, 1, -0.2, 0, 0, true),
       armSubsystem.ArmtopositionCommand(Arm.Reefarm),
       new RunCommand(() -> intakeSubsystem.Run(1.0), intakeSubsystem));
   }
