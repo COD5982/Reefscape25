@@ -60,6 +60,8 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // NamedCommands.registerCommand("rotateArmReef", ar);
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -86,9 +88,9 @@ public class RobotContainer {
   private void configureBindings() {
 
     m_driveTrain.setDefaultCommand(new DefaultDrive(m_driveTrain,
-        ()->Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),2),
-        ()->Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),2),
-        ()->Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),2)));
+        ()->Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),4),
+        ()->Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),4),
+        ()->Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),4)));
     
     // CONTROLLER CONTROLS
     m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 ));
