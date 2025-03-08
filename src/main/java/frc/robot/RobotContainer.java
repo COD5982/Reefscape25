@@ -67,7 +67,7 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     
     autoChooser.addOption("Drive Straight Only", new TimedDrive(
-      m_driveTrain, 1, 0.2, 0, 0, true));
+      m_driveTrain, 1, -0.2, 0, 0, true));
     
     autoChooser.addOption("Drive and Dump", Autos.DriveAndDump(m_driveTrain, m_arm, m_intake));
 
