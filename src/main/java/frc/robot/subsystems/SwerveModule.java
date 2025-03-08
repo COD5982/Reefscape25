@@ -56,6 +56,8 @@ public class SwerveModule implements ISwerveModule{
     m_turningMotor.configure(turnConfig, null, null);
     SparkMaxConfig driveConfig = new SparkMaxConfig();
     driveConfig.inverted(false);
+    driveConfig.encoder.positionConversionFactor(Constants.ModuleConstants.kDriveMotorConversionFactor);
+    driveConfig.encoder.velocityConversionFactor(Constants.ModuleConstants.kMotorRPM2MPS);
     m_driveMotor.configure(driveConfig, null, null);
 
     ShuffleboardTab SwerveTab = Shuffleboard.getTab("Swerve");
@@ -65,7 +67,7 @@ public class SwerveModule implements ISwerveModule{
     SwerveTab.addDouble("Turn Encoder Angle" + turningEncoderCanID,()-> m_turnEncoder.getAbsolutePosition().getValue().in(Radians));
     SwerveTab.addDouble("Drive PID SP" + turningEncoderCanID,()->m_drivePIDController.getSetpoint() );
     SwerveTab.addDouble("Drive PID Error" + turningEncoderCanID,()->m_drivePIDController.getPositionError() );
-    SwerveTab.addDouble("Drive Motor Volocity" + turningEncoderCanID, ()->m_driveMotor.getEncoder().getVelocity()* Constants.ModuleConstants.kMotorRPM2MPS);
+    SwerveTab.addDouble("Drive Motor Volocity" + turningEncoderCanID, ()->m_driveMotor.getEncoder().getVelocity());
 
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
@@ -79,7 +81,7 @@ public class SwerveModule implements ISwerveModule{
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(
-        m_driveMotor.getEncoder().getVelocity()* Constants.ModuleConstants.kMotorRPM2MPS, new Rotation2d(m_turnEncoder.getAbsolutePosition().getValue()));
+        m_driveMotor.getEncoder().getVelocity(), new Rotation2d(m_turnEncoder.getAbsolutePosition().getValue()));
   }
 
   /**
@@ -110,7 +112,7 @@ public class SwerveModule implements ISwerveModule{
 
     // Calculate the drive output from the drive PID controller.
      double driveOutput =
-        m_drivePIDController.calculate(m_driveMotor.getEncoder().getVelocity() * Constants.ModuleConstants.kMotorRPM2MPS, desiredState.speedMetersPerSecond);
+        m_drivePIDController.calculate(m_driveMotor.getEncoder().getVelocity(), desiredState.speedMetersPerSecond);
 
     // Calculate the turning motor output from the turning PID controller.
     double turnOutput =

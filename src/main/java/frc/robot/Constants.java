@@ -72,9 +72,9 @@ public final class Constants {
     public static final double kIModuleDriveController = 0.00;
     public static final double kFFModuleDriveController = 0.225;
   }
-public static final class Swerve{
-  public static final PIDConstants translationConstants = new PIDConstants(0.5, 0.0, 0.0);
-  public static final PIDConstants rotationConstants = new PIDConstants(0.5, 0.0, 0.0);
 
-}
+  public static final class Swerve{
+    public static final PIDConstants translationConstants = new PIDConstants(0.5, 0.0, 0.0);
+    public static final PIDConstants rotationConstants = new PIDConstants(0.5, 0.0, 0.0);
+  }
 }

@@ -24,13 +24,18 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 public class DriveTrain extends DriveTrainBase {
 
-  private static final double kMaxSpeedMetersPerSecond = 4;
+  private static final double kMaxSpeedMetersPerSecond = 3.2; // 4.0;
   private AHRS m_gyro = new AHRS(NavXComType.kMXP_SPI);
 
-  private final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
-  private final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
-  private final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
-  private final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
+  private final Translation2d m_frontLeftLocation = new Translation2d(0.267, 0.311);
+  private final Translation2d m_frontRightLocation = new Translation2d(0.267, -0.311);
+  private final Translation2d m_backLeftLocation = new Translation2d(-0.267, 0.311);
+  private final Translation2d m_backRightLocation = new Translation2d(-0.267, -0.311);
+
+  // private final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
+  // private final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
+  // private final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
+  // private final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
 
   private final SwerveDriveKinematics m_kinematics =
     new SwerveDriveKinematics(
@@ -117,7 +122,7 @@ public class DriveTrain extends DriveTrainBase {
     SmartDashboard.putNumber("Odometry Y (m)", pose.getY());
     SmartDashboard.putNumber("Odometry Rotation (deg)", pose.getRotation().getDegrees());
     SmartDashboard.putNumber("Gyro Angle (deg)", m_gyro.getAngle());
-  }  
+  }
   
   public void updateOdometry() {
     m_odometry.update(
