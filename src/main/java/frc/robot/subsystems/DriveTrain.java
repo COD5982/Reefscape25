@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.CANIds;
-import frc.robot.Constants.DriveConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -29,15 +28,13 @@ public class DriveTrain extends DriveTrainBase {
   private AHRS m_gyro = new AHRS(NavXComType.kMXP_SPI);
 
   private final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
-  //private final Translation2d m_frontLeftLocation = new Translation2d(-0.381, 0.381);
   private final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
   private final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
   private final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
 
   private final SwerveDriveKinematics m_kinematics =
-  
-  new SwerveDriveKinematics(
-    m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
+    new SwerveDriveKinematics(
+      m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
 
   private final SwerveModule m_frontLeft = new SwerveModule(
     CANIds.kTestDriveTrainFrontLeftPower,

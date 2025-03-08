@@ -1,11 +1,8 @@
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.DriveTrainBase;
-import frc.robot.subsystems.Lift;
 
 public class Armnudge extends Command{
     private Arm m_Arm; 

@@ -8,8 +8,6 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIds;
@@ -42,7 +40,7 @@ public class Lift extends SubsystemBase{
             .d(0)
             .outputRange(-0.25, 0.25);
 
-            back.closedLoop
+        back.closedLoop
             .p(0.1)
             .i(0)
             .d(0)

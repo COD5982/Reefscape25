@@ -4,32 +4,20 @@
 
 package frc.robot;
 
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Armnudge;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DefaultDrive;
-import frc.robot.commands.DriveAndDump;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Liftnudge;
-import frc.robot.commands.Runcage;
-import frc.robot.commands.Runintake;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Cageclimb;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.DriveTrainBase;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.TestDriveTrain;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
