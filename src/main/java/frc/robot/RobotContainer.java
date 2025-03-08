@@ -3,14 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.OperatorConstants;

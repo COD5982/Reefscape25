@@ -14,15 +14,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIds;
 
 public class Intake extends SubsystemBase {
+     
      SparkMax m_intake = new SparkMax(CANIds.kIntakeMotor, MotorType.kBrushed);
    
-public Intake() {
+     public Intake() { }
 
-
-
-}
-
-public void Run(double Runvalue){
-m_intake.set(Runvalue);
-}
+     public void Run(double Runvalue){
+          m_intake.set(Runvalue);
+     }
 }

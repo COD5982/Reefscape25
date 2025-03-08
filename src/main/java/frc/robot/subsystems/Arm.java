@@ -8,9 +8,9 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIds;
@@ -21,11 +21,11 @@ public class Arm extends SubsystemBase {
     SparkClosedLoopController m_controller = m_armSpark.getClosedLoopController();
     private double targetposition = 0;
     private double targetvelocity = 0;
+    SlewRateLimiter velocityLimiter = new SlewRateLimiter(180.0);
     public static final double Floorarm = -105; //-38.6
     public static final double Reefarm = -50;
     public static final double Spitarm = -10;
     public static final double Middlearm = 0;
-
     public static final double SoftLimitMax = 12; //7.5
     public static final double SoftLimitMin = -180.0; //-38.6; //-100
     public static final double SoftSpeedLimit = 20; //90
@@ -48,45 +48,48 @@ public class Arm extends SubsystemBase {
             .i(0, ClosedLoopSlot.kSlot0)
             .d(0, ClosedLoopSlot.kSlot0)
             .outputRange(-0.3, 0.3, ClosedLoopSlot.kSlot0)
-            // Velocity control in slot 2
+            // Velocity control in slot 1
             .p(0.005, ClosedLoopSlot.kSlot1)
             .i(0, ClosedLoopSlot.kSlot1)
             .d(0, ClosedLoopSlot.kSlot1)
             .velocityFF(0.0018, ClosedLoopSlot.kSlot1)
             .outputRange(-0.3, 0.3, ClosedLoopSlot.kSlot1);
-        //config.absoluteEncoder.velocityConversionFactor
+        
         m_armSpark.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+    public void Periodic(){
+        SmartDashboard.putNumber("Relative Arm Position (deg)", m_armSpark.getEncoder().getPosition());
     }
 
     public Command ArmtopositionCommand(double Position){
         return this.runOnce(() -> this.ArmtoPosition(Position));
-
     }
 
     private void ArmtoPosition(double Position){
-        targetvelocity = 0; // reset
-        velocityLimiter.reset(0.0); // reset
+        ResetVelocityControl(); // reset velocity controller when switching to position
         m_controller.setReference(Position, ControlType.kPosition);
         targetposition = Position;
     }
 
     public void Nudge(double Nudgevalue){
-        targetvelocity = 0; // reset
-        velocityLimiter.reset(0.0); // reset
+        ResetVelocityControl(); // reset velocity controller when switching to position
         targetposition += Nudgevalue;
         targetposition = MathUtil.clamp(targetposition,SoftLimitMin,SoftLimitMax);
         m_controller.setReference(targetposition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
 
-    SlewRateLimiter velocityLimiter = new SlewRateLimiter(180.0);
-
     public void Run(double speed){
-        targetposition = m_armSpark.getEncoder().getPosition(); // reset
+        targetposition = m_armSpark.getEncoder().getPosition(); // reset position controller when switching to velocity
         targetvelocity = MathUtil.clamp(speed, -SoftSpeedLimit, SoftSpeedLimit);
         targetvelocity = velocityLimiter.calculate(targetvelocity);
         m_controller.setReference(targetvelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot1);
     }
-    
+
+    private void ResetVelocityControl(){
+        targetvelocity = 0; 
+        velocityLimiter.reset(0.0);
+    }
 }
 
 
