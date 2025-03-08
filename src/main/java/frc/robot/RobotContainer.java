@@ -69,7 +69,7 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     
     autoChooser.addOption("Drive Straight Only", new TimedDrive(
-      m_driveTrain, 1, -0.2, 0, 0, true));
+      m_driveTrain, 2, -0.2, 0, 0, true));
     
     autoChooser.addOption("Drive and Dump", Autos.DriveAndDump(m_driveTrain, m_arm, m_intake));
 
@@ -88,10 +88,17 @@ public class RobotContainer {
   private void configureBindings() {
 
     m_driveTrain.setDefaultCommand(new DefaultDrive(m_driveTrain,
-        ()-> -Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),4),
-        ()-> -Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),4),
-        ()-> -Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),4)));
-    
+      ()-> -Math.signum(m_driverController.getLeftY()) * Math.abs(Math.pow(m_driverController.getLeftY(),3)),
+      ()-> -Math.signum(m_driverController.getLeftX()) * Math.abs(Math.pow(m_driverController.getLeftX(),3)),
+      ()-> -Math.signum(m_driverController.getRightX()) * Math.abs(Math.pow(m_driverController.getRightX(),3))));
+      // ()-> -Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),4),
+      // ()-> -Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),4),
+      // ()-> -Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),4)));
+        
+      // ()-> -Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),2),
+      // ()-> -Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),2),
+      // ()-> -Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),2)));
+        
     // CONTROLLER CONTROLS
     m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 ));
     m_copilotController.povDown().whileTrue(new Liftnudge(m_lift, ()->-0.2 ));

@@ -26,7 +26,7 @@ public class Lift extends SubsystemBase{
     public static final double positionL2 = 20;
     public static final double positionL3 = 40;
     public static final double positionL4 = 50;
-    public static final double positionNet = 60;
+    public static final double positionNet = 62; //60;
 
     public Lift() {
         //ShuffleboardTab LiftTab = Shuffleboard.getTab("Lift");
