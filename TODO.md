@@ -20,9 +20,9 @@
 
 [x] Version control - Do another git commit
 [x] Version control - Push to github
-[ ] Shuffleboard - Add more troubleshooting diagnostics for each subsystem/component
+[x] Shuffleboard - Add more troubleshooting diagnostics for each subsystem/component
 [ ] Path Planner Autons
   [x] DriveTrain - Add `AutoBuilder` / `RobotConfig`
   [x] Re-enable `autoChooser` in `RobotContainer`
-  [ ] Register commands - https://pathplanner.dev/pplib-named-commands.html
-  [ ] Build autons in path planner
+  [x] Register commands - https://pathplanner.dev/pplib-named-commands.html
+  [x] Build autons in path planner
