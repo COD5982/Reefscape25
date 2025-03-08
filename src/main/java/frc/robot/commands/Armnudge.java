@@ -10,17 +10,17 @@ import frc.robot.subsystems.Lift;
 public class Armnudge extends Command{
     private Arm m_Arm; 
     private DoubleSupplier m_Nudge;
+    
     public Armnudge(Arm subsystem, DoubleSupplier nudge) {
-m_Arm = subsystem;
-m_Nudge = nudge;
-addRequirements(m_Arm);
-   
+        m_Arm = subsystem;
+        m_Nudge = nudge;
+        addRequirements(m_Arm);
     }
+
     @Override
     public void execute() {
-double Nudgevalue = m_Nudge.getAsDouble();
-Nudgevalue *= 0.1;
-m_Arm.Nudge(Nudgevalue);
-
+        double Nudgevalue = m_Nudge.getAsDouble();
+        Nudgevalue *= 0.1;
+        m_Arm.Nudge(Nudgevalue);
     }
 }

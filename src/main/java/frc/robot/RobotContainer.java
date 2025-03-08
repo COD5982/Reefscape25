@@ -53,10 +53,8 @@ public class RobotContainer {
   private final Cageclimb m_cage = new Cageclimb();
   private final Intake m_intake = new Intake();
   private final SendableChooser<Command> autoChooser;
-  private final CommandXboxController m_driverController =
-    new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController m_copilotController =
-    new CommandXboxController(OperatorConstants.kCopilotControllerPort);
+  private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_copilotController = new CommandXboxController(OperatorConstants.kCopilotControllerPort);
   private final CommandJoystick m_copilotButtonbox = new CommandJoystick(2);
       
   //private final SendableChooser<Command> autoChooser;
@@ -86,12 +84,13 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
     m_driveTrain.setDefaultCommand(new DefaultDrive(m_driveTrain,
         ()->Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),2),
         ()->Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),2),
         ()->Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),2)));
     
-        // CONTROLLER CONTROLS
+    // CONTROLLER CONTROLS
     m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 ));
     m_copilotController.povDown().whileTrue(new Liftnudge(m_lift, ()->-0.2 ));
     m_copilotController.y().onTrue(m_arm.ArmtopositionCommand(Arm.Spitarm));

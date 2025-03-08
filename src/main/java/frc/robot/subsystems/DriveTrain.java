@@ -115,7 +115,7 @@ public class DriveTrain extends DriveTrainBase {
     m_field.setRobotPose(m_odometry.getPoseMeters());
 
     Pose2d pose = m_odometry.getPoseMeters();
-    
+
     SmartDashboard.putNumber("Odometry X (m)", pose.getX());
     SmartDashboard.putNumber("Odometry Y (m)", pose.getY());
     SmartDashboard.putNumber("Odometry Rotation (deg)", pose.getRotation().getDegrees());
@@ -135,60 +135,57 @@ public class DriveTrain extends DriveTrainBase {
   @Override
   public Rotation2d getRotation2d(){ 
     return Rotation2d.fromDegrees(-m_gyro.getAngle());
-    // return m_gyro.getRotation2d().;
   }
 
-    @Override
-    SwerveDriveKinematics getSwerveDriveKinematics() {
-       return m_kinematics;
-    }
-    @Override
-    SwerveModule getFrontLeftModule() {
-        return m_frontLeft;
-    }
+  @Override
+  SwerveDriveKinematics getSwerveDriveKinematics() {
+    return m_kinematics;
+  }
+  
+  @Override
+  SwerveModule getFrontLeftModule() {
+    return m_frontLeft;
+  }
 
-    @Override
-    SwerveModule getFrontRightModule() {
-        
-        return m_frontRight;
-    }
+  @Override
+  SwerveModule getFrontRightModule() {    
+    return m_frontRight;
+  }
 
-    @Override
-    SwerveModule getBackLeftModule() {
-        
-       return m_backLeft;
-    }
+  @Override
+  SwerveModule getBackLeftModule() {    
+    return m_backLeft;
+  }
 
-    @Override
-    SwerveModule getBackRightModule() {
-       
-       return m_backRight;
-    }
+  @Override
+  SwerveModule getBackRightModule() {   
+    return m_backRight;
+  }
 
-    @Override
-    double getMaxSpeedMetersPerSecond() {
-        return kMaxSpeedMetersPerSecond;
-    }
+  @Override
+  double getMaxSpeedMetersPerSecond() {
+    return kMaxSpeedMetersPerSecond;
+  }
     
-     public SwerveModuleState[] getModuleStates() {
-      SwerveModuleState[] state = {
-        getFrontLeftModule().getState(),
-        getFrontRightModule().getState(),
-        getBackLeftModule().getState(),
-        getBackRightModule().getState()
-      };
-       return state;
-     }
+  public SwerveModuleState[] getModuleStates() {
+    SwerveModuleState[] state = {
+      getFrontLeftModule().getState(),
+      getFrontRightModule().getState(),
+      getBackLeftModule().getState(),
+      getBackRightModule().getState()};
 
-    public SwerveModulePosition[] getPositions() {
-      SwerveModulePosition[] positions = {
-        getFrontLeftModule().getPosition(),
-        getFrontRightModule().getPosition(),
-        getBackLeftModule().getPosition(),
-        getBackRightModule().getPosition()
-      };
-       return positions;
-    }
+    return state;
+  }
+
+  public SwerveModulePosition[] getPositions() {
+    SwerveModulePosition[] positions = {
+      getFrontLeftModule().getPosition(),
+      getFrontRightModule().getPosition(),
+      getBackLeftModule().getPosition(),
+      getBackRightModule().getPosition()};
+    
+      return positions;
+  }
 
   Pose2d getPose(){
     return m_odometry.getPoseMeters();

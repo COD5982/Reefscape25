@@ -33,31 +33,32 @@ import frc.robot.Constants.CANIds;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule implements ISwerveModule{
+
   private final SparkFlex m_driveMotor;
   private final SparkFlex m_turningMotor;
   private final CANcoder m_turnEncoder;
 
-  private final PIDController m_drivePIDController =
-      new PIDController(ModuleConstants.kPModuleDriveController, 
+  private final PIDController m_drivePIDController = 
+    new PIDController(
+      ModuleConstants.kPModuleDriveController, 
       ModuleConstants.kIModuleDriveController, 
-      0
-      );
+      0);
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController =
-      new ProfiledPIDController(
-          ModuleConstants.kPModuleTurningController,
-          0,
-          0,
-          new TrapezoidProfile.Constraints(
-              ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
-              ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared));
-
+    new ProfiledPIDController(
+      ModuleConstants.kPModuleTurningController,
+      0,
+      0,
+      new TrapezoidProfile.Constraints(
+        ModuleConstants.kMaxModuleAngularSpeedRadiansPerSecond,
+        ModuleConstants.kMaxModuleAngularAccelerationRadiansPerSecondSquared));
 
   public SwerveModule(
       int driveMotorChannel,
       int turningMotorChannel,
       int turningEncoderCanID) {
+    
     m_driveMotor = new SparkFlex(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new SparkFlex(turningMotorChannel, MotorType.kBrushless);
     m_turnEncoder = new CANcoder(turningEncoderCanID);
@@ -69,19 +70,18 @@ public class SwerveModule implements ISwerveModule{
     driveConfig.inverted(false);
     m_driveMotor.configure(driveConfig, null, null);
 
-ShuffleboardTab SwerveTab = Shuffleboard.getTab("Swerve");
-SwerveTab.add("Turn Encoder" + turningEncoderCanID, m_turnEncoder);
-SwerveTab.addDouble("Turn PID SP" + turningEncoderCanID,()->m_turningPIDController.getSetpoint().position );
-SwerveTab.addDouble("Turn PID Error" + turningEncoderCanID,()->m_turningPIDController.getPositionError() );
-SwerveTab.addDouble("Turn Encoder Angle" + turningEncoderCanID,()-> m_turnEncoder.getAbsolutePosition().getValue().in(Radians));
-SwerveTab.addDouble("Drive PID SP" + turningEncoderCanID,()->m_drivePIDController.getSetpoint() );
-SwerveTab.addDouble("Drive PID Error" + turningEncoderCanID,()->m_drivePIDController.getPositionError() );
-SwerveTab.addDouble("Drive Motor Volocity" + turningEncoderCanID, ()->m_driveMotor.getEncoder().getVelocity()* Constants.ModuleConstants.kMotorRPM2MPS);
+    ShuffleboardTab SwerveTab = Shuffleboard.getTab("Swerve");
+    SwerveTab.add("Turn Encoder" + turningEncoderCanID, m_turnEncoder);
+    SwerveTab.addDouble("Turn PID SP" + turningEncoderCanID,()->m_turningPIDController.getSetpoint().position );
+    SwerveTab.addDouble("Turn PID Error" + turningEncoderCanID,()->m_turningPIDController.getPositionError() );
+    SwerveTab.addDouble("Turn Encoder Angle" + turningEncoderCanID,()-> m_turnEncoder.getAbsolutePosition().getValue().in(Radians));
+    SwerveTab.addDouble("Drive PID SP" + turningEncoderCanID,()->m_drivePIDController.getSetpoint() );
+    SwerveTab.addDouble("Drive PID Error" + turningEncoderCanID,()->m_drivePIDController.getPositionError() );
+    SwerveTab.addDouble("Drive Motor Volocity" + turningEncoderCanID, ()->m_driveMotor.getEncoder().getVelocity()* Constants.ModuleConstants.kMotorRPM2MPS);
 
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
     m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
-    
   }
 
   /**
@@ -92,7 +92,6 @@ SwerveTab.addDouble("Drive Motor Volocity" + turningEncoderCanID, ()->m_driveMot
   public SwerveModuleState getState() {
     return new SwerveModuleState(
         m_driveMotor.getEncoder().getVelocity()* Constants.ModuleConstants.kMotorRPM2MPS, new Rotation2d(m_turnEncoder.getAbsolutePosition().getValue()));
-        
   }
 
   /**
@@ -130,8 +129,8 @@ SwerveTab.addDouble("Drive Motor Volocity" + turningEncoderCanID, ()->m_driveMot
         m_turningPIDController.calculate(
             m_turnEncoder.getAbsolutePosition().getValue().in(Radians), desiredState.angle.getRadians());
             driveOutput = driveOutput + ModuleConstants.kFFModuleDriveController * desiredState.speedMetersPerSecond;
-//turnOutput=MathUtil.clamp(turnOutput, -0.5, 0.5);
-//driveOutput=MathUtil.clamp(driveOutput, -0.5, 0.5);
+    //turnOutput=MathUtil.clamp(turnOutput, -0.5, 0.5);
+    //driveOutput=MathUtil.clamp(driveOutput, -0.5, 0.5);
     // Calculate the turning motor output from the turning PID controller.
     m_driveMotor.set(driveOutput);
     m_turningMotor.set(turnOutput);
