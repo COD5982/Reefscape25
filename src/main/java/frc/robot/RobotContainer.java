@@ -20,6 +20,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Liftnudge;
 import frc.robot.commands.Runcage;
 import frc.robot.commands.Runintake;
+import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Cageclimb;
 import frc.robot.subsystems.DriveTrain;
@@ -65,6 +66,11 @@ public class RobotContainer {
 
     // Autonomous chooser
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
+    autoChooser.addOption("Drive Straight Only", new TimedDrive(
+      m_driveTrain, 1, 0.2, 0, 0, true));
+    
+    // autoChooser.addOption("Drive And Dump", new DriveAndDump());
+
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
@@ -78,15 +84,12 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driveTrain.setDefaultCommand(
-    // A split-stick arcade command, with forward/backward controlled by the left hand, and turning controlled by the right.
-
-    // CONTROLLER CONTROLS
-    new DefaultDrive(m_driveTrain,
-      ()->Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),2),
-      ()->Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),2),
-      ()->Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),2)));
-
+    m_driveTrain.setDefaultCommand(new DefaultDrive(m_driveTrain,
+        ()->Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),2),
+        ()->Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),2),
+        ()->Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),2)));
+    
+        // CONTROLLER CONTROLS
     m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 ));
     m_copilotController.povDown().whileTrue(new Liftnudge(m_lift, ()->-0.2 ));
     m_copilotController.y().onTrue(m_arm.ArmtopositionCommand(Arm.Spitarm));

@@ -28,6 +28,5 @@ public class DefaultDrive extends Command {
         double rotspeed=m_rotSpeed.getAsDouble();
         if (Math.abs(rotspeed)<0.1){rotspeed=0;}
         m_drive.drive(xspeed, yspeed, rotspeed, true);
-        
     }
 }
