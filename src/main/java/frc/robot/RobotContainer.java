@@ -64,20 +64,20 @@ public class RobotContainer {
     // autoChooser = new SendableChooser<Command>();
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     
-    try{
+    // try{
       
-      // autoChooser.setDefaultOption("None", Commands.none());
-      // autoChooser.addOption("Straight Out", new PathPlannerAuto("Straight Out"));
-      // autoChooser.addOption("Middle Coral", new PathPlannerAuto("Middle Coral"));
-      // autoChooser.addOption("Red Coral", new PathPlannerAuto("Red Coral"));
-      autoChooser.addOption("Drive Straight Only", new TimedDrive(
-        m_driveTrain, 2, -0.2, 0, 0, true));
-      autoChooser.addOption("Drive and Dump", Autos.DriveAndDump(m_driveTrain, m_arm, m_intake));
-    }
-    catch (Exception ex){
-      DataLogManager.log("autoChooser load error");
-      DataLogManager.log(ex.getMessage());
-    }
+    //   // autoChooser.setDefaultOption("None", Commands.none());
+    //   // autoChooser.addOption("Straight Out", new PathPlannerAuto("Straight Out"));
+    //   // autoChooser.addOption("Middle Coral", new PathPlannerAuto("Middle Coral"));
+    //   // autoChooser.addOption("Red Coral", new PathPlannerAuto("Red Coral"));
+    //   autoChooser.addOption("Drive Straight Only", new TimedDrive(
+    //     m_driveTrain, 2, -0.2, 0, 0, true));
+    //   autoChooser.addOption("Drive and Dump", Autos.DriveAndDump(m_driveTrain, m_arm, m_intake));
+    // }
+    // catch (Exception ex){
+    //   DataLogManager.log("autoChooser load error");
+    //   DataLogManager.log(ex.getMessage());
+    // }
     
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
