@@ -22,13 +22,13 @@ public class Arm extends SubsystemBase {
     private double targetposition = 0;
     private double targetvelocity = 0;
     SlewRateLimiter velocityLimiter = new SlewRateLimiter(180.0);
-    public static final double Floorarm = -105; //-38.6
+    public static final double Floorarm = -105;
     public static final double Reefarm = -50;
     public static final double Spitarm = -10;
     public static final double Middlearm = 0;
-    public static final double SoftLimitMax = 12; //7.5
-    public static final double SoftLimitMin = -180.0; //-38.6; //-100
-    public static final double SoftSpeedLimit = 20; //90
+    public static final double SoftLimitMax = 12;
+    public static final double SoftLimitMin = -180.0;
+    public static final double SoftSpeedLimit = 20;
 
     public Arm() {
 

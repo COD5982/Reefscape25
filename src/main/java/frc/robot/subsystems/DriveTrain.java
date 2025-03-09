@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -31,11 +30,6 @@ public class DriveTrain extends DriveTrainBase {
   private final Translation2d m_frontRightLocation = new Translation2d(0.267, -0.311);
   private final Translation2d m_backLeftLocation = new Translation2d(-0.267, 0.311);
   private final Translation2d m_backRightLocation = new Translation2d(-0.267, -0.311);
-
-  // private final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
-  // private final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
-  // private final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
-  // private final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
 
   private final SwerveDriveKinematics m_kinematics =
     new SwerveDriveKinematics(
