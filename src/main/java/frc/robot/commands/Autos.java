@@ -6,10 +6,9 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.DriveTrainBase;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -28,8 +27,10 @@ public final class Autos {
     );
   }
 
-  public static Command ScoreReef(Arm armSub) {
-    return armSub.ArmtopositionCommand(Arm.Reefarm);
+  public static Command ScoreReef(Lift liftSub, Arm armSub) {
+    return Commands.sequence(
+      liftSub.LifttopositionCommand(Lift.positionL1),
+      armSub.ArmtopositionCommand(Arm.Reefarm));
   }
 
   private Autos() {

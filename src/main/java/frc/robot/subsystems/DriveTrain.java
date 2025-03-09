@@ -124,6 +124,7 @@ public class DriveTrain extends DriveTrainBase {
     SmartDashboard.putNumber("Gyro Angle (deg)", m_gyro.getAngle());
   }
 
+  @Override
   public void updateOdometry() {
     m_odometry.update(
       getRotation2d(),
@@ -189,11 +190,13 @@ public class DriveTrain extends DriveTrainBase {
       return positions;
   }
 
-  Pose2d getPose(){
+  @Override
+  public Pose2d getPose(){
     return m_odometry.getPoseMeters();
   }
   
-  void resetPose(Pose2d Pose){
+  @Override
+  public void resetPose(Pose2d Pose){
     m_odometry.resetPosition(m_gyro.getRotation2d(), getPositions(), Pose);
   }
           

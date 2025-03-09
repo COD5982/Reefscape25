@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -86,4 +87,7 @@ public abstract class DriveTrainBase extends SubsystemBase {
   abstract ISwerveModule getFrontRightModule();
   abstract ISwerveModule getBackLeftModule();
   abstract ISwerveModule getBackRightModule();
+  abstract Pose2d getPose();
+  abstract void resetPose(Pose2d pose);
+  abstract void updateOdometry();
 }

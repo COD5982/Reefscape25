@@ -18,7 +18,6 @@ import frc.robot.subsystems.DriveTrainBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,7 +47,7 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    NamedCommands.registerCommand("ScoreReef", Autos.ScoreReef(m_arm));
+    NamedCommands.registerCommand("ScoreReef", Autos.ScoreReef(m_lift, m_arm));
   
     // Configure the trigger bindings
     configureBindings();
