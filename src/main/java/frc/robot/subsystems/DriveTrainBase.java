@@ -14,6 +14,7 @@ import com.pathplanner.lib.config.RobotConfig;
 public abstract class DriveTrainBase extends SubsystemBase {
 
   protected Field2d m_field = new Field2d();
+  // protected boolean fieldRelative = false;
     
   public DriveTrainBase() {
     
@@ -80,6 +81,14 @@ public abstract class DriveTrainBase extends SubsystemBase {
     getBackRightModule().setDesiredState(swerveModuleStates[3]);
   }
 
+  // public boolean isFieldRelative(){
+  //   return fieldRelative;
+  // }
+
+  // public void setFieldRelative(boolean fieldRel){
+  //   fieldRelative = true;
+  // }
+
   abstract double getMaxSpeedMetersPerSecond();
   abstract Rotation2d getRotation2d();
   abstract SwerveDriveKinematics getSwerveDriveKinematics();
@@ -87,7 +96,7 @@ public abstract class DriveTrainBase extends SubsystemBase {
   abstract ISwerveModule getFrontRightModule();
   abstract ISwerveModule getBackLeftModule();
   abstract ISwerveModule getBackRightModule();
-  abstract Pose2d getPose();
-  abstract void resetPose(Pose2d pose);
+  abstract public Pose2d getPose();
+  abstract public void resetPose(Pose2d pose);
   abstract void updateOdometry();
 }

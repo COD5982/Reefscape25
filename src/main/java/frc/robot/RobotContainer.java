@@ -55,6 +55,8 @@ public class RobotContainer {
     // Autonomous chooser
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     SmartDashboard.putData("Auto Mode", autoChooser);
+
+    SmartDashboard.putData("Reset Pose", Autos.ResetPose(m_driveTrain));
   }
 
   /**
