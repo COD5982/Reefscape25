@@ -50,7 +50,6 @@ public abstract class DriveTrainBase extends SubsystemBase {
     SmartDashboard.putData("Field", m_field);
   }
 
-
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     xSpeed *= getMaxSpeedMetersPerSecond();
     ySpeed *= getMaxSpeedMetersPerSecond();

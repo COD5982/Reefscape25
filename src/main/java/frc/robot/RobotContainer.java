@@ -18,6 +18,7 @@ import frc.robot.subsystems.DriveTrainBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -102,10 +103,10 @@ public class RobotContainer {
       double right = m_copilotController.getRightTriggerAxis();
       double left = m_copilotController.getLeftTriggerAxis();
       if (right > min){
-        m_intake.Run(right);
+        m_intake.Run(1.0);
       }
       else if (left > min){
-        m_intake.Run(-left);
+        m_intake.Run(-1.0);
       }
       else{
         m_intake.Run(0.0);
