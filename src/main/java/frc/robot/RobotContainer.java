@@ -4,8 +4,12 @@
 
 package frc.robot;
 
+import javax.xml.crypto.Data;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Armnudge;
 import frc.robot.commands.Autos;
@@ -19,9 +23,11 @@ import frc.robot.subsystems.DriveTrainBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -54,13 +60,25 @@ public class RobotContainer {
     configureBindings();
 
     // Autonomous chooser
+    // autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
+    // autoChooser = new SendableChooser<Command>();
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     
-    autoChooser.addOption("Drive Straight Only", new TimedDrive(
-      m_driveTrain, 2, -0.2, 0, 0, true));
+    try{
+      
+      // autoChooser.setDefaultOption("None", Commands.none());
+      // autoChooser.addOption("Straight Out", new PathPlannerAuto("Straight Out"));
+      // autoChooser.addOption("Middle Coral", new PathPlannerAuto("Middle Coral"));
+      // autoChooser.addOption("Red Coral", new PathPlannerAuto("Red Coral"));
+      autoChooser.addOption("Drive Straight Only", new TimedDrive(
+        m_driveTrain, 2, -0.2, 0, 0, true));
+      autoChooser.addOption("Drive and Dump", Autos.DriveAndDump(m_driveTrain, m_arm, m_intake));
+    }
+    catch (Exception ex){
+      DataLogManager.log("autoChooser load error");
+      DataLogManager.log(ex.getMessage());
+    }
     
-    autoChooser.addOption("Drive and Dump", Autos.DriveAndDump(m_driveTrain, m_arm, m_intake));
-
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
@@ -86,6 +104,10 @@ public class RobotContainer {
       // ()-> -Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),2),
       // ()-> -Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),2),
       // ()-> -Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),2)));
+
+      // ()-> -m_driverController.getLeftY(),
+      // ()-> -m_driverController.getLeftX(),
+      // ()-> -m_driverController.getRightX());
         
     // CONTROLLER CONTROLS
     m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 ));
