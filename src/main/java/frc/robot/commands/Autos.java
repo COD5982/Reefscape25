@@ -28,10 +28,19 @@ public final class Autos {
     );
   }
 
-  public static Command ScoreReef(Lift liftSub, Arm armSub) {
+  public static Command ScoreReef(Lift liftSub, Arm armSub,Intake intakesub) {
     return Commands.sequence(
-      liftSub.LifttopositionCommand(Lift.positionL1),
-      armSub.ArmtopositionCommand(Arm.Reefarm));
+      liftSub.LifttopositionCommand(Lift.positionL2),
+      Commands.waitSeconds(2),
+      armSub.ArmtopositionCommand(Arm.Floorarm),
+      Commands.waitSeconds(2),
+      intakesub.RunCommand(-1.0),
+      Commands.waitSeconds(1),
+      intakesub.RunCommand(0),
+      armSub.ArmtopositionCommand(Arm.Middlearm),
+      Commands.waitSeconds(1),
+      liftSub.LifttopositionCommand(Lift.positionFloor)
+      );
   }
 
   public static Command ResetPose(DriveTrainBase driveSub){

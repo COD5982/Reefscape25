@@ -29,6 +29,8 @@ public class Arm extends SubsystemBase {
     public static final double SoftLimitMax = 12;
     public static final double SoftLimitMin = -180.0;
     public static final double SoftSpeedLimit = 20;
+    public static final double L2Arm = -83;
+    public static final double L3Arm = -95;
 
     public Arm() {
 
@@ -65,7 +67,12 @@ public class Arm extends SubsystemBase {
     public Command ArmtopositionCommand(double Position){
         return this.runOnce(() -> this.ArmtoPosition(Position));
     }
-
+public boolean ArmSafeTravel(){
+if (targetposition >= Spitarm&&targetposition <= Middlearm){
+    return true;
+}
+return false;
+}
     private void ArmtoPosition(double Position){
         ResetVelocityControl(); // reset velocity controller when switching to position
         m_controller.setReference(Position, ControlType.kPosition);

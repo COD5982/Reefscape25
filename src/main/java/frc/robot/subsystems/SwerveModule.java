@@ -30,7 +30,7 @@ public class SwerveModule implements ISwerveModule{
     new PIDController(
       ModuleConstants.kPModuleDriveController, 
       ModuleConstants.kIModuleDriveController, 
-      0);
+      ModuleConstants.kDModuleDriveController);
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController =
@@ -111,7 +111,9 @@ public class SwerveModule implements ISwerveModule{
     desiredState.cosineScale(encoderRotation);
 
     // Calculate the drive output from the drive PID controller.
+    double desiredDriveVelocity =  m_driveMotor.getEncoder().getVelocity()/2 + desiredState.speedMetersPerSecond / 2;
      double driveOutput =
+    // m_drivePIDController.calculate(m_driveMotor.getEncoder().getVelocity(), desiredDriveVelocity);
         m_drivePIDController.calculate(m_driveMotor.getEncoder().getVelocity(), desiredState.speedMetersPerSecond);
 
     // Calculate the turning motor output from the turning PID controller.

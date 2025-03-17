@@ -68,8 +68,9 @@ public final class Constants {
    public static final double kDriveMotorticks2mps=kWheelCircumfrenceMeters * (1.0 / 8.14)*(1 / 60.0);
     public static final double kPModuleTurningController = 0.25;
     public static final double kDriveMotorConversionFactor = (1.0 / 8.14) * kWheelCircumfrenceMeters;
-    public static final double kPModuleDriveController = 0.01;
-    public static final double kIModuleDriveController = 0.00;
+    public static final double kPModuleDriveController = 0.005;
+    public static final double kIModuleDriveController = 0.001;
+    public static final double kDModuleDriveController = 0.0015;
     public static final double kFFModuleDriveController = 0.225;
   }
 

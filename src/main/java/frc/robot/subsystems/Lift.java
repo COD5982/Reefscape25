@@ -24,7 +24,7 @@ public class Lift extends SubsystemBase{
     public static final double positionL2 = 20;
     public static final double positionL3 = 40;
     public static final double positionL4 = 50;
-    public static final double positionNet = 62; //60;
+    public static final double positionNet = 59.645; //60;
 
     public Lift() {
         //ShuffleboardTab LiftTab = Shuffleboard.getTab("Lift");
@@ -67,4 +67,10 @@ public class Lift extends SubsystemBase{
         targetposition = MathUtil.clamp(targetposition,0,60);
         LifttoPosition(targetposition);
     }
+    public boolean LiftSafeTravel(){
+        if (targetposition >= positionFloor&&targetposition <= positionL1){
+            return true;
+        }
+        return false;
+        }
 }

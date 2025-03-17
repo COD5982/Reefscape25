@@ -47,7 +47,7 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    NamedCommands.registerCommand("ScoreReef", Autos.ScoreReef(m_lift, m_arm));
+    NamedCommands.registerCommand("ScoreReef", Autos.ScoreReef(m_lift, m_arm, m_intake));
   
     // Configure the trigger bindings
     configureBindings();
@@ -71,9 +71,11 @@ public class RobotContainer {
   private void configureBindings() {
 
     m_driveTrain.setDefaultCommand(new DefaultDrive(m_driveTrain,
-      ()-> -Math.signum(m_driverController.getLeftY()) * Math.abs(Math.pow(m_driverController.getLeftY(),3)),
-      ()-> -Math.signum(m_driverController.getLeftX()) * Math.abs(Math.pow(m_driverController.getLeftX(),3)),
-      ()-> -Math.signum(m_driverController.getRightX()) * Math.abs(Math.pow(m_driverController.getRightX(),3))));
+      ()-> -Math.signum(m_driverController.getLeftY()) * Math.abs(Math.pow(MathUtil.applyDeadband(m_driverController.getLeftY(),0.1),3)),
+      ()-> -Math.signum(m_driverController.getLeftX()) * Math.abs(Math.pow(MathUtil.applyDeadband(m_driverController.getLeftX(),0.1),3)),
+      ()-> -Math.signum(m_driverController.getRightX()) * Math.abs(Math.pow(MathUtil.applyDeadband(m_driverController.getRightX(),0.1),3)),
+      
+      ()-> m_driverController.rightBumper().getAsBoolean()&&m_arm.ArmSafeTravel()&&m_lift.LiftSafeTravel()));
       // ()-> -Math.signum(m_driverController.getLeftY()) * Math.pow(m_driverController.getLeftY(),4),
       // ()-> -Math.signum(m_driverController.getLeftX()) * Math.pow(m_driverController.getLeftX(),4),
       // ()-> -Math.signum(m_driverController.getRightX()) * Math.pow(m_driverController.getRightX(),4)));
@@ -116,8 +118,8 @@ public class RobotContainer {
 
     // BUTTON BOX CONTROLS
     m_copilotButtonbox.button(4).onTrue(m_lift.LifttopositionCommand(Lift.positionL1));
-    m_copilotButtonbox.button(2).onTrue(m_lift.LifttopositionCommand(Lift.positionL2));
-    m_copilotButtonbox.button(1).onTrue(m_lift.LifttopositionCommand(Lift.positionL3));
+    m_copilotButtonbox.button(2).onTrue(m_lift.LifttopositionCommand(Lift.positionL2).alongWith(m_arm.ArmtopositionCommand(Arm.L2Arm)));
+    m_copilotButtonbox.button(1).onTrue(m_lift.LifttopositionCommand(Lift.positionL3).alongWith(m_arm.ArmtopositionCommand(Arm.L3Arm)));
     m_copilotButtonbox.button(3).onTrue(m_lift.LifttopositionCommand(Lift.positionL4));
     m_copilotButtonbox.button(5).onTrue(m_lift.LifttopositionCommand(Lift.positionNet));
     m_copilotButtonbox.button(6).onTrue(m_lift.LifttopositionCommand(Lift.positionFloor));
