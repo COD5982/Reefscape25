@@ -30,19 +30,27 @@ public final class Autos {
 
   public static Command ScoreReef(Lift liftSub, Arm armSub,Intake intakesub) {
     return Commands.sequence(
-      liftSub.LifttopositionCommand(Lift.positionL2),
-      Commands.waitSeconds(2),
-      armSub.ArmtopositionCommand(Arm.Floorarm),
-      Commands.waitSeconds(2),
-      intakesub.RunCommand(-1.0),
+      armSub.ArmtopositionCommand(Arm.CoralDrop),
+      Commands.waitSeconds(1),
+      intakesub.RunCommand(-0.50),
       Commands.waitSeconds(1),
       intakesub.RunCommand(0),
       armSub.ArmtopositionCommand(Arm.Middlearm),
-      Commands.waitSeconds(1),
-      liftSub.LifttopositionCommand(Lift.positionFloor)
+      Commands.waitSeconds(1)
+     
       );
   }
-
+  public static Command PickupBall(Lift liftSub, Arm armSub,Intake intakesub) {
+    return Commands.sequence(
+      intakesub.RunCommand(1.0),
+      armSub.ArmtopositionCommand(Arm.BallonCoral),
+      Commands.waitSeconds(1),
+      intakesub.RunCommand(0),
+      armSub.ArmtopositionCommand(Arm.Middlearm),
+      Commands.waitSeconds(1)
+     
+      );
+  }
   public static Command ResetPose(DriveTrainBase driveSub){
     return new RunCommand(() -> driveSub.resetPose(new Pose2d()), driveSub);
   }

@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreReef"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side1CoralAlgie"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PickupBall"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScorePosition"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

@@ -17,10 +17,15 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.DriveTrainBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -43,12 +48,25 @@ public class RobotContainer {
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_copilotController = new CommandXboxController(OperatorConstants.kCopilotControllerPort);
   private final CommandJoystick m_copilotButtonbox = new CommandJoystick(2);
-      
+    
+  
+  VideoSink server;
+  UsbCamera cam;
+  UsbCamera cam1;
+
   //private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    cam = CameraServer.startAutomaticCapture(0);
+    cam1 = CameraServer.startAutomaticCapture(1);
+    server =  CameraServer.getServer();
+    server.setSource(cam);
+    cam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    cam1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+
     NamedCommands.registerCommand("ScoreReef", Autos.ScoreReef(m_lift, m_arm, m_intake));
-  
+    NamedCommands.registerCommand("PickupBall", Autos.PickupBall(m_lift, m_arm, m_intake));
     // Configure the trigger bindings
     configureBindings();
 
@@ -87,9 +105,15 @@ public class RobotContainer {
       // ()-> -m_driverController.getLeftY(),
       // ()-> -m_driverController.getLeftX(),
       // ()-> -m_driverController.getRightX());
+
+      Runnable setBallCam = () -> server.setSource(cam);
+      Runnable setBargeCam = () -> server.setSource(cam1);
+
+      m_driverController.povLeft().onTrue(new InstantCommand(setBallCam));
+      m_driverController.povRight().onTrue(new InstantCommand(setBargeCam));
         
     // CONTROLLER CONTROLS
-    m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 ));
+    m_copilotController.povUp().whileTrue(new Liftnudge(m_lift, ()->0.2 )); 
     m_copilotController.povDown().whileTrue(new Liftnudge(m_lift, ()->-0.2 ));
     m_copilotController.y().onTrue(m_arm.ArmtopositionCommand(Arm.Spitarm));
     m_copilotController.b().onTrue(m_arm.ArmtopositionCommand(Arm.Middlearm));
@@ -117,14 +141,14 @@ public class RobotContainer {
     }, m_intake));
 
     // BUTTON BOX CONTROLS
-    m_copilotButtonbox.button(4).onTrue(m_lift.LifttopositionCommand(Lift.positionL1));
-    m_copilotButtonbox.button(2).onTrue(m_lift.LifttopositionCommand(Lift.positionL2).alongWith(m_arm.ArmtopositionCommand(Arm.L2Arm)));
-    m_copilotButtonbox.button(1).onTrue(m_lift.LifttopositionCommand(Lift.positionL3).alongWith(m_arm.ArmtopositionCommand(Arm.L3Arm)));
-    m_copilotButtonbox.button(3).onTrue(m_lift.LifttopositionCommand(Lift.positionL4));
-    m_copilotButtonbox.button(5).onTrue(m_lift.LifttopositionCommand(Lift.positionNet));
-    m_copilotButtonbox.button(6).onTrue(m_lift.LifttopositionCommand(Lift.positionFloor));
-    m_copilotButtonbox.button(8).onTrue(new RunCommand(()->m_cage.Run(-0.2), m_cage)).onFalse (new RunCommand(()->m_cage.Run(0), m_cage));
-    m_copilotButtonbox.button(7).onTrue(new RunCommand(()->m_cage.Run(0.2), m_cage)).onFalse (new RunCommand(()->m_cage.Run(0), m_cage));
+    m_copilotButtonbox.button(4).onTrue(m_lift.LifttopositionCommand(Lift.positionL1).alongWith(new InstantCommand(setBallCam)));
+    m_copilotButtonbox.button(2).onTrue(m_lift.LifttopositionCommand(Lift.positionL2).alongWith(m_arm.ArmtopositionCommand(Arm.L2Arm)).alongWith(new InstantCommand(setBallCam)));
+    m_copilotButtonbox.button(1).onTrue(m_lift.LifttopositionCommand(Lift.positionL3).alongWith(m_arm.ArmtopositionCommand(Arm.L3Arm)).alongWith(new InstantCommand(setBallCam)));
+    m_copilotButtonbox.button(3).onTrue(m_lift.LifttopositionCommand(Lift.positionL4).alongWith(new InstantCommand(setBargeCam)));
+    m_copilotButtonbox.button(5).onTrue(m_lift.LifttopositionCommand(Lift.positionNet).alongWith(new InstantCommand(setBargeCam)));
+    m_copilotButtonbox.button(6).onTrue(m_lift.LifttopositionCommand(Lift.positionFloor).alongWith(new InstantCommand(setBallCam)));
+    m_copilotButtonbox.button(8).onTrue(new RunCommand(()->m_cage.Run(-0.4), m_cage)).onFalse (new RunCommand(()->m_cage.Run(0), m_cage));
+    m_copilotButtonbox.button(7).onTrue(new RunCommand(()->m_cage.Run(0.4), m_cage)).onFalse (new RunCommand(()->m_cage.Run(0), m_cage));
   }
 
   /**

@@ -31,9 +31,9 @@ public class DefaultDrive extends Command {
       
         boolean turbo =m_turbo.getAsBoolean();
         if (!turbo){
-            xspeed*=0.3;
-            yspeed*=0.3;
-            rotspeed*=0.3;
+           xspeed*=0.8; //pre playoffs .35
+            yspeed*=0.8;
+            rotspeed*=0.8;
         }
         m_drive.drive(xspeed, yspeed, rotspeed, false);
     }

@@ -23,7 +23,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 public class DriveTrain extends DriveTrainBase {
 
-  private static final double kMaxSpeedMetersPerSecond = 3.2; // 4.0;
+  private static final double kMaxSpeedMetersPerSecond = 4.2; // 4.0    pre-playoffs 3.2;
   private AHRS m_gyro = new AHRS(NavXComType.kMXP_SPI);
 
   private final Translation2d m_frontLeftLocation = new Translation2d(0.267, 0.311);

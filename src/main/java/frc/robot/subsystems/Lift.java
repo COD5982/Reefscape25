@@ -38,13 +38,13 @@ public class Lift extends SubsystemBase{
             .p(0.1)
             .i(0)
             .d(0)
-            .outputRange(-0.25, 0.25);
+            .outputRange(-0.4, 0.4); //pre playoffs .25
 
         back.closedLoop
             .p(0.1)
             .i(0)
             .d(0)
-            .outputRange(-0.25, 0.25);
+            .outputRange(-0.4, 0.4);
 
         front.inverted(true);
 

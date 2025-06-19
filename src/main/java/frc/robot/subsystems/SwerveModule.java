@@ -57,7 +57,7 @@ public class SwerveModule implements ISwerveModule{
     SparkMaxConfig driveConfig = new SparkMaxConfig();
     driveConfig.inverted(false);
     driveConfig.encoder.positionConversionFactor(Constants.ModuleConstants.kDriveMotorConversionFactor);
-    driveConfig.encoder.velocityConversionFactor(Constants.ModuleConstants.kMotorRPM2MPS);
+    driveConfig.encoder.velocityConversionFactor(Constants.ModuleConstants.kDriveMotorticks2mps);
     m_driveMotor.configure(driveConfig, null, null);
 
     ShuffleboardTab SwerveTab = Shuffleboard.getTab("Swerve");
@@ -111,7 +111,7 @@ public class SwerveModule implements ISwerveModule{
     desiredState.cosineScale(encoderRotation);
 
     // Calculate the drive output from the drive PID controller.
-    double desiredDriveVelocity =  m_driveMotor.getEncoder().getVelocity()/2 + desiredState.speedMetersPerSecond / 2;
+    //double desiredDriveVelocity =  m_driveMotor.getEncoder().getVelocity()/2 + desiredState.speedMetersPerSecond / 2;
      double driveOutput =
     // m_drivePIDController.calculate(m_driveMotor.getEncoder().getVelocity(), desiredDriveVelocity);
         m_drivePIDController.calculate(m_driveMotor.getEncoder().getVelocity(), desiredState.speedMetersPerSecond);

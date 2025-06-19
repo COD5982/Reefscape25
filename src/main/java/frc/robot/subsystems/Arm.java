@@ -31,6 +31,8 @@ public class Arm extends SubsystemBase {
     public static final double SoftSpeedLimit = 20;
     public static final double L2Arm = -83;
     public static final double L3Arm = -95;
+    public static final double CoralDrop = -56;
+    public static final double BallonCoral = -75;
 
     public Arm() {
 
@@ -68,10 +70,11 @@ public class Arm extends SubsystemBase {
         return this.runOnce(() -> this.ArmtoPosition(Position));
     }
 public boolean ArmSafeTravel(){
-if (targetposition >= Spitarm&&targetposition <= Middlearm){
+//if (targetposition >= Spitarm&&targetposition <= Middlearm)
+{
     return true;
 }
-return false;
+//return false;
 }
     private void ArmtoPosition(double Position){
         ResetVelocityControl(); // reset velocity controller when switching to position
